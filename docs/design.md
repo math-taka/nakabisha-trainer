@@ -79,20 +79,21 @@ Piece
 
 1手の指し手を表す。
 
-通常の移動と駒打ちを区別できる構造にする。
+通常の駒の移動と駒打ちを区別するため、駒打ちの場合は `from` を `null` とする。
 
 概念上は以下を保持する。
 
 ```text
 Move
-├── MoveType type
 ├── Square from
 ├── Square to
 ├── PieceType pieceType
 └── boolean promotion
 ```
 
-駒打ちでは `from` を使用しない。
+`from != null` の場合は通常の駒の移動を表し、`from == null` の場合は持ち駒から `to` へ駒を打つ指し手を表す。
+
+`from == null` の場合でも、`to` と `pieceType` は必ず保持する。駒打ちでは `promotion` は `false` とする。
 
 ### 4.6 `Position`
 
