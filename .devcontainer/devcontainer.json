@@ -1,0 +1,13 @@
+{
+  "name": "Nakabisha Trainer",
+  "image": "mcr.microsoft.com/devcontainers/java:1-17-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17",
+      "jdkDistro": "ms"
+    },
+    "ghcr.io/devcontainers/features/maven:1": {
+      "version": "3.9"
+    }
+  }
+}
