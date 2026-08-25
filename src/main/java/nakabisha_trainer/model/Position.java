@@ -80,6 +80,45 @@ public final class Position {
         return new Position(board, new Hand(), new Hand(), Side.SENTE);
     }
 
+    public Position apply(Move move) {
+        Objects.requireNonNull(move, "move must not be null");
+
+        Piece[] newBoard = Arrays.copyOf(board, board.length);
+        Hand newSenteHand = copyHand(senteHand);
+        Hand newGoteHand = copyHand(goteHand);
+
+        if (move.isDrop()) {
+            Hand hand = move.side() == Side.SENTE
+                    ? newSenteHand
+                    : newGoteHand;
+            applyDrop(move, newBoard, hand);
+        } else {
+            throw new UnsupportedOperationException("Normal moves are not implemented yet");
+        }
+
+        return new Position(
+                newBoard,
+                newSenteHand,
+                newGoteHand,
+                sideToMove.opposite());
+    }
+
+    private static void applyDrop(Move move, Piece[] board, Hand hand) {
+        PieceType type = move.pieceType();
+        hand.remove(type);
+        board[move.to().index()] = new Piece(move.side(), type, false);
+    }
+
+    private static Hand copyHand(Hand hand) {
+        Hand copy = new Hand();
+        for (PieceType type : PieceType.values()) {
+            for (int i = 0; i < hand.count(type); i++) {
+                copy.add(type);
+            }
+        }
+        return copy;
+    }
+
     public Piece pieceAt(Square square) {
         Objects.requireNonNull(square, "square must not be null");
         return board[square.index()];
