@@ -71,6 +71,40 @@ class PositionTest {
         assertEquals(Side.SENTE, position.sideToMove());
     }
 
+    @Test
+    void appliesDropMove() {
+        Piece[] board = new Piece[81];
+        Hand senteHand = new Hand();
+        Hand goteHand = new Hand();
+        senteHand.add(PieceType.HISHA);
+        Position position = new Position(board, senteHand, goteHand, Side.SENTE);
+        Square to = new Square(5, 5);
+        Move move = new Move(null, to, PieceType.HISHA, false);
+
+        Position next = position.apply(move);
+
+        assertEquals(new Piece(Side.SENTE, PieceType.HISHA, false), next.pieceAt(to));
+        assertEquals(0, next.hand(Side.SENTE).count(PieceType.HISHA));
+        assertEquals(Side.GOTE, next.sideToMove());
+    }
+
+    @Test
+    void applyingDropDoesNotModifyOriginalPosition() {
+        Piece[] board = new Piece[81];
+        Hand senteHand = new Hand();
+        Hand goteHand = new Hand();
+        senteHand.add(PieceType.HISHA);
+        Position position = new Position(board, senteHand, goteHand, Side.SENTE);
+        Square to = new Square(5, 5);
+        Move move = new Move(null, to, PieceType.HISHA, false);
+
+        Position next = position.apply(move);
+
+        assertNull(position.pieceAt(to));
+        assertEquals(1, position.hand(Side.SENTE).count(PieceType.HISHA));
+        assertEquals(new Piece(Side.SENTE, PieceType.HISHA, false), next.pieceAt(to));
+    }
+
     private static void assertPiece(
             Position position,
             int file,
