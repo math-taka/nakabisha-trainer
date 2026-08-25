@@ -7,4 +7,8 @@ public record Piece(Side side, PieceType type, boolean promoted) {
         Objects.requireNonNull(side, "side must not be null");
         Objects.requireNonNull(type, "type must not be null");
     }
+
+    public Piece promote() {
+        return new Piece(side, type, true);
+    }
 }
