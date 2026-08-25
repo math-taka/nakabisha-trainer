@@ -10,4 +10,10 @@ class SideTest {
         assertEquals(Side.SENTE, Side.valueOf("SENTE"));
         assertEquals(Side.GOTE, Side.valueOf("GOTE"));
     }
+
+    @Test
+    void oppositeReturnsOtherSide() {
+        assertEquals(Side.GOTE, Side.SENTE.opposite());
+        assertEquals(Side.SENTE, Side.GOTE.opposite());
+    }
 }
