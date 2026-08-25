@@ -88,25 +88,29 @@ public final class Position {
         Hand newGoteHand = copyHand(goteHand);
 
         if (move.isDrop()) {
-            Hand hand = move.side() == Side.SENTE
+            Hand hand = sideToMove == Side.SENTE
                     ? newSenteHand
                     : newGoteHand;
-            applyDrop(move, newBoard, hand);
+            applyDrop(move, newBoard, hand, sideToMove);
         } else {
             throw new UnsupportedOperationException("Normal moves are not implemented yet");
         }
 
-        return new Position(
-                newBoard,
-                newSenteHand,
-                newGoteHand,
-                sideToMove.opposite());
+        Side nextSide = sideToMove == Side.SENTE
+                ? Side.GOTE
+                : Side.SENTE;
+
+        return new Position(newBoard, newSenteHand, newGoteHand, nextSide);
     }
 
-    private static void applyDrop(Move move, Piece[] board, Hand hand) {
+    private static void applyDrop(
+            Move move,
+            Piece[] board,
+            Hand hand,
+            Side side) {
         PieceType type = move.pieceType();
         hand.remove(type);
-        board[move.to().index()] = new Piece(move.side(), type, false);
+        board[move.to().index()] = new Piece(side, type, false);
     }
 
     private static Hand copyHand(Hand hand) {
