@@ -93,7 +93,9 @@ public final class Position {
                     : newGoteHand;
             applyDrop(move, newBoard, hand, sideToMove);
         } else {
-            throw new UnsupportedOperationException("Normal moves are not implemented yet");
+            applyMove(move, newBoard, sideToMove == Side.SENTE
+                    ? newSenteHand
+                    : newGoteHand);
         }
 
         Side nextSide = sideToMove.opposite();
@@ -109,6 +111,29 @@ public final class Position {
         PieceType type = move.pieceType();
         hand.remove(type);
         board[move.to().index()] = new Piece(side, type, false);
+    }
+
+    private static void applyMove(
+            Move move,
+            Piece[] board,
+            Hand hand) {
+        int fromIndex = move.from().index();
+        int toIndex = move.to().index();
+
+        Piece piece = board[fromIndex];
+        Piece capturedPiece = board[toIndex];
+
+        if (capturedPiece != null) {
+            hand.add(capturedPiece.type());
+        }
+
+        board[fromIndex] = null;
+
+        if (move.promotion()) {
+            piece = piece.promote();
+        }
+
+        board[toIndex] = piece;
     }
 
     private static Hand copyHand(Hand hand) {
