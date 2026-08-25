@@ -36,4 +36,24 @@ class PieceTest {
         assertEquals(PieceType.GIN, piece.type());
         assertEquals(true, piece.promoted());
     }
+
+    @Test
+    void promoteReturnsPromotedPiece() {
+        Piece piece = new Piece(Side.SENTE, PieceType.HISHA, false);
+
+        Piece promoted = piece.promote();
+
+        assertEquals(Side.SENTE, promoted.side());
+        assertEquals(PieceType.HISHA, promoted.type());
+        assertEquals(true, promoted.promoted());
+    }
+
+    @Test
+    void promoteDoesNotModifyOriginalPiece() {
+        Piece piece = new Piece(Side.SENTE, PieceType.HISHA, false);
+
+        piece.promote();
+
+        assertFalse(piece.promoted());
+    }
 }
