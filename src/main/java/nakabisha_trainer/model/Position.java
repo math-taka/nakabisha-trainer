@@ -96,9 +96,7 @@ public final class Position {
             throw new UnsupportedOperationException("Normal moves are not implemented yet");
         }
 
-        Side nextSide = sideToMove == Side.SENTE
-                ? Side.GOTE
-                : Side.SENTE;
+        Side nextSide = sideToMove.opposite();
 
         return new Position(newBoard, newSenteHand, newGoteHand, nextSide);
     }
