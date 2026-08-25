@@ -105,6 +105,75 @@ class PositionTest {
         assertEquals(new Piece(Side.SENTE, PieceType.HISHA, false), next.pieceAt(to));
     }
 
+    @Test
+    void appliesNormalMove() {
+        Piece[] board = new Piece[81];
+        Square from = new Square(2, 8);
+        Square to = new Square(2, 7);
+        board[from.index()] = new Piece(Side.SENTE, PieceType.HISHA, false);
+        Position position = new Position(
+                board, new Hand(), new Hand(), Side.SENTE);
+        Move move = new Move(from, to, PieceType.HISHA, false);
+
+        Position next = position.apply(move);
+
+        assertNull(next.pieceAt(from));
+        assertEquals(new Piece(Side.SENTE, PieceType.HISHA, false), next.pieceAt(to));
+        assertEquals(Side.GOTE, next.sideToMove());
+    }
+
+    @Test
+    void appliesCaptureMove() {
+        Piece[] board = new Piece[81];
+        Square from = new Square(2, 8);
+        Square to = new Square(2, 7);
+        board[from.index()] = new Piece(Side.SENTE, PieceType.HISHA, false);
+        board[to.index()] = new Piece(Side.GOTE, PieceType.GIN, false);
+        Position position = new Position(
+                board, new Hand(), new Hand(), Side.SENTE);
+        Move move = new Move(from, to, PieceType.HISHA, false);
+
+        Position next = position.apply(move);
+
+        assertNull(next.pieceAt(from));
+        assertEquals(new Piece(Side.SENTE, PieceType.HISHA, false), next.pieceAt(to));
+        assertEquals(1, next.hand(Side.SENTE).count(PieceType.GIN));
+    }
+
+    @Test
+    void appliesPromotionMove() {
+        Piece[] board = new Piece[81];
+        Square from = new Square(2, 7);
+        Square to = new Square(2, 6);
+        board[from.index()] = new Piece(Side.SENTE, PieceType.HISHA, false);
+        Position position = new Position(
+                board, new Hand(), new Hand(), Side.SENTE);
+        Move move = new Move(from, to, PieceType.HISHA, true);
+
+        Position next = position.apply(move);
+
+        assertNull(next.pieceAt(from));
+        assertEquals(new Piece(Side.SENTE, PieceType.HISHA, true), next.pieceAt(to));
+    }
+
+    @Test
+    void applyingMoveDoesNotModifyOriginalPosition() {
+        Piece[] board = new Piece[81];
+        Square from = new Square(2, 8);
+        Square to = new Square(2, 7);
+        board[from.index()] = new Piece(Side.SENTE, PieceType.HISHA, false);
+        Position position = new Position(
+                board, new Hand(), new Hand(), Side.SENTE);
+        Move move = new Move(from, to, PieceType.HISHA, false);
+
+        Position next = position.apply(move);
+
+        assertEquals(new Piece(Side.SENTE, PieceType.HISHA, false), position.pieceAt(from));
+        assertNull(position.pieceAt(to));
+        assertNull(next.pieceAt(from));
+        assertEquals(new Piece(Side.SENTE, PieceType.HISHA, false), next.pieceAt(to));
+    }
+
     private static void assertPiece(
             Position position,
             int file,
