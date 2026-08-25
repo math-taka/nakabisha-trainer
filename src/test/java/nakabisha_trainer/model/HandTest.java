@@ -21,4 +21,30 @@ class HandTest {
 
         assertThrows(NullPointerException.class, () -> hand.count(null));
     }
+
+    @Test
+    void removeDecreasesCount() {
+        Hand hand = new Hand();
+
+        hand.add(PieceType.HISHA);
+        hand.remove(PieceType.HISHA);
+
+        assertEquals(0, hand.count(PieceType.HISHA));
+    }
+
+    @Test
+    void removeThrowsWhenCountIsZero() {
+        Hand hand = new Hand();
+
+        assertThrows(
+                IllegalStateException.class,
+                () -> hand.remove(PieceType.HISHA));
+    }
+
+    @Test
+    void removeRejectsNull() {
+        Hand hand = new Hand();
+
+        assertThrows(NullPointerException.class, () -> hand.remove(null));
+    }
 }
