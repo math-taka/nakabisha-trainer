@@ -27,6 +27,61 @@ class PositionTest {
     }
 
     @Test
+    void initialPositionHasStandardPiecePlacement() {
+        Position position = Position.initial();
+
+        assertPiece(position, 9, 1, Side.GOTE, PieceType.KYOSHA);
+        assertPiece(position, 8, 1, Side.GOTE, PieceType.KEIMA);
+        assertPiece(position, 7, 1, Side.GOTE, PieceType.GIN);
+        assertPiece(position, 6, 1, Side.GOTE, PieceType.KIN);
+        assertPiece(position, 5, 1, Side.GOTE, PieceType.OU);
+        assertPiece(position, 4, 1, Side.GOTE, PieceType.KIN);
+        assertPiece(position, 3, 1, Side.GOTE, PieceType.GIN);
+        assertPiece(position, 2, 1, Side.GOTE, PieceType.KEIMA);
+        assertPiece(position, 1, 1, Side.GOTE, PieceType.KYOSHA);
+        assertPiece(position, 8, 2, Side.GOTE, PieceType.HISHA);
+        assertPiece(position, 2, 2, Side.GOTE, PieceType.KAKU);
+
+        for (int file = 1; file <= 9; file++) {
+            assertPiece(position, file, 3, Side.GOTE, PieceType.FU);
+            assertPiece(position, file, 7, Side.SENTE, PieceType.FU);
+        }
+
+        assertPiece(position, 8, 8, Side.SENTE, PieceType.KAKU);
+        assertPiece(position, 2, 8, Side.SENTE, PieceType.HISHA);
+        assertPiece(position, 9, 9, Side.SENTE, PieceType.KYOSHA);
+        assertPiece(position, 8, 9, Side.SENTE, PieceType.KEIMA);
+        assertPiece(position, 7, 9, Side.SENTE, PieceType.GIN);
+        assertPiece(position, 6, 9, Side.SENTE, PieceType.KIN);
+        assertPiece(position, 5, 9, Side.SENTE, PieceType.OU);
+        assertPiece(position, 4, 9, Side.SENTE, PieceType.KIN);
+        assertPiece(position, 3, 9, Side.SENTE, PieceType.GIN);
+        assertPiece(position, 2, 9, Side.SENTE, PieceType.KEIMA);
+        assertPiece(position, 1, 9, Side.SENTE, PieceType.KYOSHA);
+    }
+
+    @Test
+    void initialPositionHasEmptyHandsAndSenteToMove() {
+        Position position = Position.initial();
+
+        for (PieceType type : PieceType.values()) {
+            assertEquals(0, position.hand(Side.SENTE).count(type));
+            assertEquals(0, position.hand(Side.GOTE).count(type));
+        }
+        assertEquals(Side.SENTE, position.sideToMove());
+    }
+
+    private static void assertPiece(
+            Position position,
+            int file,
+            int rank,
+            Side side,
+            PieceType type) {
+        Piece piece = position.pieceAt(new Square(file, rank));
+        assertEquals(new Piece(side, type, false), piece);
+    }
+
+    @Test
     void boardIsDefensivelyCopiedOnConstruction() {
         Piece[] board = new Piece[81];
         Square square = new Square(5, 8);
