@@ -2,11 +2,11 @@ package nakabisha_trainer.model;
 
 public enum PieceType {
     FU,
-    KYOSHA,
-    KEIMA,
+    KYO,
+    KEI,
     GIN,
     KIN,
     KAKU,
-    HISHA,
+    HI,
     OU
 }
