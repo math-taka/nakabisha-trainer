@@ -13,11 +13,11 @@ class MoveTest {
     void createsNormalMove() {
         Square from = new Square(5, 9);
         Square to = new Square(5, 8);
-        Move move = new Move(from, to, PieceType.HISHA, false);
+        Move move = new Move(from, to, PieceType.HI, false);
 
         assertEquals(from, move.from());
         assertEquals(to, move.to());
-        assertEquals(PieceType.HISHA, move.pieceType());
+        assertEquals(PieceType.HI, move.pieceType());
         assertFalse(move.promotion());
         assertFalse(move.isDrop());
     }
@@ -39,7 +39,7 @@ class MoveTest {
         Move move = new Move(
                 new Square(5, 7),
                 new Square(5, 6),
-                PieceType.HISHA,
+                PieceType.HI,
                 true);
 
         assertTrue(move.promotion());
