@@ -96,7 +96,7 @@ class GameRecordReplayTest {
                 move(2, 1, 3, 3, PieceType.KEI, false)));
 
         assertReplayCompleted(record);
-        assertPiece(record.currentPosition(), 4, 2, Side.SENTE, PieceType.HI, false);
+        assertPiece(record.currentPosition(), 4, 2, Side.GOTE, PieceType.HI, false);
         assertPiece(record.currentPosition(), 3, 3, Side.GOTE, PieceType.KEI, false);
         assertPiece(record.currentPosition(), 7, 2, Side.GOTE, PieceType.OU, false);
     }
@@ -130,7 +130,7 @@ class GameRecordReplayTest {
         assertPiece(record.currentPosition(), 2, 8, Side.SENTE, PieceType.FU, false);
         assertPiece(record.currentPosition(), 7, 8, Side.SENTE, PieceType.KIN, false);
         assertEquals(0, record.currentPosition().hand(Side.SENTE).count(PieceType.FU));
-        assertEquals(0, record.currentPosition().hand(Side.GOTE).count(PieceType.FU));
+        assertEquals(1, record.currentPosition().hand(Side.GOTE).count(PieceType.FU));
     }
 
     private static GameRecord recordOf(List<Move> moves) {
