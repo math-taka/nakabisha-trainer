@@ -26,10 +26,10 @@ class HandTest {
     void removeDecreasesCount() {
         Hand hand = new Hand();
 
-        hand.add(PieceType.HISHA);
-        hand.remove(PieceType.HISHA);
+        hand.add(PieceType.HI);
+        hand.remove(PieceType.HI);
 
-        assertEquals(0, hand.count(PieceType.HISHA));
+        assertEquals(0, hand.count(PieceType.HI));
     }
 
     @Test
@@ -38,7 +38,7 @@ class HandTest {
 
         assertThrows(
                 IllegalStateException.class,
-                () -> hand.remove(PieceType.HISHA));
+                () -> hand.remove(PieceType.HI));
     }
 
     @Test
