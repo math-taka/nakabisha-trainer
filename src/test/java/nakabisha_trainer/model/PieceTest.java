@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 class PieceTest {
     @Test
     void createsUnpromotedPiece() {
-        Piece piece = new Piece(Side.SENTE, PieceType.HISHA, false);
+        Piece piece = new Piece(Side.SENTE, PieceType.HI, false);
 
         assertEquals(Side.SENTE, piece.side());
-        assertEquals(PieceType.HISHA, piece.type());
+        assertEquals(PieceType.HI, piece.type());
         assertFalse(piece.promoted());
     }
 
@@ -39,18 +39,18 @@ class PieceTest {
 
     @Test
     void promoteReturnsPromotedPiece() {
-        Piece piece = new Piece(Side.SENTE, PieceType.HISHA, false);
+        Piece piece = new Piece(Side.SENTE, PieceType.HI, false);
 
         Piece promoted = piece.promote();
 
         assertEquals(Side.SENTE, promoted.side());
-        assertEquals(PieceType.HISHA, promoted.type());
+        assertEquals(PieceType.HI, promoted.type());
         assertEquals(true, promoted.promoted());
     }
 
     @Test
     void promoteDoesNotModifyOriginalPiece() {
-        Piece piece = new Piece(Side.SENTE, PieceType.HISHA, false);
+        Piece piece = new Piece(Side.SENTE, PieceType.HI, false);
 
         piece.promote();
 
