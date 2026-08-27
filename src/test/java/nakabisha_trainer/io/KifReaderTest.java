@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class KifReaderTest {
 
     private static final Path KIF_PATH =
-            Path.of("test-data/kif/nakabisha_with_comment .kif");
+            Path.of("test-data/kif/nakabisha_with_comment.kif");
 
     @Test
     void readsMoveLinesWithoutComments() throws IOException {
