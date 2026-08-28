@@ -1,10 +1,37 @@
 package nakabisha_trainer.io;
 
+import nakabisha_trainer.model.Move;
+import nakabisha_trainer.model.PieceType;
 import nakabisha_trainer.model.Square;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class KifMoveConverter {
 
+    private static final Pattern MOVE_PATTERN = Pattern.compile(
+            "^\\s*(\\d+)\\s+"
+                    + "([1-9１-９])([1-9一二三四五六七八九])"
+                    + "(歩|香|桂|銀|金|角|飛|玉)"
+                    + "\\((\\d)(\\d)\\)"
+    );
+
     private KifMoveConverter() {
+    }
+
+    public static Move convert(String line) {
+        Matcher matcher = MOVE_PATTERN.matcher(line);
+
+        if (!matcher.find()) {
+            throw new IllegalArgumentException(
+                    "Unsupported KIF move: " + line);
+        }
+
+        Square to = parseSquare(matcher.group(2), matcher.group(3));
+        PieceType pieceType = parsePieceType(matcher.group(4));
+        Square from = parseSquare(matcher.group(5), matcher.group(6));
+
+        return new Move(from, to, pieceType, false);
     }
 
     static Square parseSquare(String file, String rank) {
@@ -27,6 +54,21 @@ public class KifMoveConverter {
             case "9", "９", "九" -> 9;
             default -> throw new IllegalArgumentException(
                     "Unsupported coordinate: " + value);
+        };
+    }
+
+    static PieceType parsePieceType(String value) {
+        return switch (value) {
+            case "歩" -> PieceType.FU;
+            case "香" -> PieceType.KY;
+            case "桂" -> PieceType.KE;
+            case "銀" -> PieceType.GI;
+            case "金" -> PieceType.KI;
+            case "角" -> PieceType.KA;
+            case "飛" -> PieceType.HI;
+            case "玉" -> PieceType.GY;
+            default -> throw new IllegalArgumentException(
+                    "Unsupported piece: " + value);
         };
     }
 }
