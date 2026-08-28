@@ -60,13 +60,13 @@ public class KifMoveConverter {
     static PieceType parsePieceType(String value) {
         return switch (value) {
             case "歩" -> PieceType.FU;
-            case "香" -> PieceType.KY;
-            case "桂" -> PieceType.KE;
-            case "銀" -> PieceType.GI;
-            case "金" -> PieceType.KI;
-            case "角" -> PieceType.KA;
+            case "香" -> PieceType.KYO;
+            case "桂" -> PieceType.KEI;
+            case "銀" -> PieceType.GIN;
+            case "金" -> PieceType.KIN;
+            case "角" -> PieceType.KAKU;
             case "飛" -> PieceType.HI;
-            case "玉" -> PieceType.GY;
+            case "玉" -> PieceType.OU;
             default -> throw new IllegalArgumentException(
                     "Unsupported piece: " + value);
         };
