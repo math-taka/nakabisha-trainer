@@ -10,31 +10,87 @@ import java.util.regex.Pattern;
 
 public class KifMoveConverter {
 
-    private static final Pattern MOVE_PATTERN = Pattern.compile(
+    private static final String PIECE = "歩|香|桂|銀|金|角|飛|玉";
+    private static final String MODIFIER = "(?:左|右|直|引|寄|上)?";
+
+    private static final Pattern NORMAL_MOVE_PATTERN = Pattern.compile(
             "^\\s*(\\d+)\\s+"
                     + "([1-9１-９])([1-9一二三四五六七八九])"
-                    + "(歩|香|桂|銀|金|角|飛|玉)"
-                    + "\\((\\d)(\\d)\\)"
+                    + "(" + PIECE + ")"
+                    + MODIFIER
+                    + "(成)?"
+                    + "\\(([1-9])([1-9])\\)"
+                    + ".*$"
+    );
+
+    private static final Pattern DROP_MOVE_PATTERN = Pattern.compile(
+            "^\\s*(\\d+)\\s+"
+                    + "([1-9１-９])([1-9一二三四五六七八九])"
+                    + "(" + PIECE + ")打"
+                    + ".*$"
+    );
+
+    private static final Pattern SAME_MOVE_PATTERN = Pattern.compile(
+            "^\\s*(\\d+)\\s+"
+                    + "同\\s*(" + PIECE + ")"
+                    + MODIFIER
+                    + "(成)?"
+                    + "\\(([1-9])([1-9])\\)"
+                    + ".*$"
     );
 
     private KifMoveConverter() {
     }
 
     public static Move convert(String line) {
-        Matcher matcher = MOVE_PATTERN.matcher(line);
-
-        if (!matcher.find()) {
-            throw new IllegalArgumentException(
-                    "Unsupported KIF move: " + line);
+        Matcher matcher = SAME_MOVE_PATTERN.matcher(line);
+        if (matcher.matches()) {
+            return convertSameMove(matcher);
         }
 
-        int moveNumber = Integer.parseInt(matcher.group(1));
-        Side side = moveNumber % 2 == 1 ? Side.SENTE : Side.GOTE;
+        matcher = DROP_MOVE_PATTERN.matcher(line);
+        if (matcher.matches()) {
+            return convertDropMove(matcher);
+        }
+
+        matcher = NORMAL_MOVE_PATTERN.matcher(line);
+        if (matcher.matches()) {
+            return convertNormalMove(matcher);
+        }
+
+        throw new IllegalArgumentException("Unsupported KIF move: " + line);
+    }
+
+    private static Move convertNormalMove(Matcher matcher) {
+        Side side = parseSide(matcher.group(1));
         Square to = parseSquare(matcher.group(2), matcher.group(3));
         PieceType pieceType = parsePieceType(matcher.group(4));
         Square from = parseSquare(matcher.group(5), matcher.group(6));
+        boolean promotion = matcher.group(7) != null;
 
-        return new Move(side, from, to, pieceType, false);
+        return new Move(side, from, to, pieceType, promotion);
+    }
+
+    private static Move convertDropMove(Matcher matcher) {
+        Side side = parseSide(matcher.group(1));
+        Square to = parseSquare(matcher.group(2), matcher.group(3));
+        PieceType pieceType = parsePieceType(matcher.group(4));
+
+        return new Move(side, null, to, pieceType, false);
+    }
+
+    private static Move convertSameMove(Matcher matcher) {
+        Side side = parseSide(matcher.group(1));
+        PieceType pieceType = parsePieceType(matcher.group(2));
+        Square from = parseSquare(matcher.group(4), matcher.group(5));
+        boolean promotion = matcher.group(3) != null;
+
+        return new Move(side, from, null, pieceType, promotion);
+    }
+
+    private static Side parseSide(String moveNumber) {
+        int number = Integer.parseInt(moveNumber);
+        return number % 2 == 1 ? Side.SENTE : Side.GOTE;
     }
 
     static Square parseSquare(String file, String rank) {
