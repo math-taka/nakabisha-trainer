@@ -50,4 +50,13 @@ class KifReaderTest {
                 "  11 ３八玉(48)   ( 0:00/00:00:03)",
                 moves.get(10));
     }
+
+    @Test
+    void readsSameMoveLines() throws IOException {
+        List<String> moves = KifReader.read(KIF_PATH);
+
+        assertTrue(
+                moves.stream().anyMatch(line -> line.matches(
+                        "^\\s*\\d+\\s+同\\s*.+$")));
+    }
 }
