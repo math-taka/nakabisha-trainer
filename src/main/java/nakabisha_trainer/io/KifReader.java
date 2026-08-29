@@ -13,7 +13,7 @@ public class KifReader {
     private static final Charset KIF_CHARSET = Charset.forName("Windows-31J");
 
     private static final Pattern MOVE_LINE_PATTERN =
-            Pattern.compile("^\\s*\\d+\\s+\\S+");
+            Pattern.compile("^\\s*\\d+\\s+(?:[0-9０-９]|同\\s*)");
 
     private static final String MOVE_HEADER =
             "手数----指手---------消費時間--";
@@ -45,7 +45,7 @@ public class KifReader {
     }
 
     private static boolean isMoveLine(String line) {
-        return MOVE_LINE_PATTERN.matcher(line).matches();
+        return MOVE_LINE_PATTERN.matcher(line).find();
     }
 
     private static boolean isEndOfMoves(String line) {
