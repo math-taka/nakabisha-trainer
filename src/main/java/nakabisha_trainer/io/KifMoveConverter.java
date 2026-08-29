@@ -65,8 +65,8 @@ public class KifMoveConverter {
         Side side = parseSide(matcher.group(1));
         Square to = parseSquare(matcher.group(2), matcher.group(3));
         PieceType pieceType = parsePieceType(matcher.group(4));
-        Square from = parseSquare(matcher.group(5), matcher.group(6));
-        boolean promotion = matcher.group(7) != null;
+        Square from = parseSquare(matcher.group(6), matcher.group(7));
+        boolean promotion = matcher.group(5) != null;
 
         return new Move(side, from, to, pieceType, promotion);
     }
