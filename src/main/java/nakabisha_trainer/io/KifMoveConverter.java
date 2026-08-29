@@ -2,6 +2,7 @@ package nakabisha_trainer.io;
 
 import nakabisha_trainer.model.Move;
 import nakabisha_trainer.model.PieceType;
+import nakabisha_trainer.model.Side;
 import nakabisha_trainer.model.Square;
 
 import java.util.regex.Matcher;
@@ -27,11 +28,13 @@ public class KifMoveConverter {
                     "Unsupported KIF move: " + line);
         }
 
+        int moveNumber = Integer.parseInt(matcher.group(1));
+        Side side = moveNumber % 2 == 1 ? Side.SENTE : Side.GOTE;
         Square to = parseSquare(matcher.group(2), matcher.group(3));
         PieceType pieceType = parsePieceType(matcher.group(4));
         Square from = parseSquare(matcher.group(5), matcher.group(6));
 
-        return new Move(from, to, pieceType, false);
+        return new Move(side, from, to, pieceType, false);
     }
 
     static Square parseSquare(String file, String rank) {
