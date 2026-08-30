@@ -43,11 +43,6 @@ public class KifMoveConverter {
     }
 
     public static Move convert(String line) {
-        System.out.println("line=[" + line + "]");
-        System.out.println("SAME=" + SAME_MOVE_PATTERN.matcher(line).matches());
-        System.out.println("DROP=" + DROP_MOVE_PATTERN.matcher(line).matches());
-        System.out.println("NORMAL=" + NORMAL_MOVE_PATTERN.matcher(line).matches());
-
         Matcher matcher = SAME_MOVE_PATTERN.matcher(line);
         if (matcher.matches()) {
             return convertSameMove(matcher);
@@ -73,7 +68,7 @@ public class KifMoveConverter {
         Square from = parseSquare(matcher.group(6), matcher.group(7));
         boolean promotion = matcher.group(5) != null;
 
-        return new Move(side, from, to, pieceType, promotion);
+        return new Move(side, from, to, pieceType, false, promotion);
     }
 
     private static Move convertDropMove(Matcher matcher) {
@@ -81,7 +76,7 @@ public class KifMoveConverter {
         Square to = parseSquare(matcher.group(2), matcher.group(3));
         PieceType pieceType = parsePieceType(matcher.group(4));
 
-        return new Move(side, null, to, pieceType, false);
+        return new Move(side, null, to, pieceType, false, false);
     }
 
     private static Move convertSameMove(Matcher matcher) {
@@ -90,7 +85,7 @@ public class KifMoveConverter {
         Square from = parseSquare(matcher.group(4), matcher.group(5));
         boolean promotion = matcher.group(3) != null;
 
-        return new Move(side, from, null, pieceType, promotion);
+        return new Move(side, from, null, pieceType, false, promotion);
     }
 
     private static Side parseSide(String moveNumber) {
