@@ -71,7 +71,12 @@ class KifMoveConverterTest {
 
     @Test
     void convertsSameMoveWithFullWidthSpace() {
-        Move move = KifMoveConverter.convert("   8 同　銀(31)   ( 0:01/00:00:05)");
+        String line = "   8 同　銀(31)   ( 0:01/00:00:05)";
+        System.out.println("line=[" + line + "]");
+        line.codePoints()
+                .forEach(c -> System.out.printf("U+%04X '%c'%n", c, c));
+
+        Move move = KifMoveConverter.convert(line);
         assertEquals(new Move(Side.GOTE, new Square(3, 1), null, PieceType.GIN, false), move);
     }
 
