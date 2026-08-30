@@ -96,11 +96,11 @@ class GameRecordReplayTest {
     }
 
     private static Move move(Side side, int fromFile, int fromRank, int toFile, int toRank, PieceType type, boolean promotion) {
-        return new Move(side, new Square(fromFile, fromRank), new Square(toFile, toRank), type, promotion);
+        return new Move(side, new Square(fromFile, fromRank), new Square(toFile, toRank), type, false, promotion);
     }
 
     private static Move drop(Side side, int toFile, int toRank, PieceType type) {
-        return new Move(side, null, new Square(toFile, toRank), type, false);
+        return new Move(side, null, new Square(toFile, toRank), type, false, false);
     }
 
     private static void assertReplayCompleted(GameRecord record) {
