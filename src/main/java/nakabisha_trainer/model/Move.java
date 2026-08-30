@@ -7,6 +7,7 @@ public record Move(
         Square from,
         Square to,
         PieceType pieceType,
+        boolean promoted,
         boolean promotion) {
 
     public Move {
