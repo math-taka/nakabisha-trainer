@@ -13,12 +13,13 @@ class MoveTest {
     void createsNormalMove() {
         Square from = new Square(5, 9);
         Square to = new Square(5, 8);
-        Move move = new Move(Side.SENTE, from, to, PieceType.HI, false);
+        Move move = new Move(Side.SENTE, from, to, PieceType.HI, false, false);
 
         assertEquals(Side.SENTE, move.side());
         assertEquals(from, move.from());
         assertEquals(to, move.to());
         assertEquals(PieceType.HI, move.pieceType());
+        assertFalse(move.promoted());
         assertFalse(move.promotion());
         assertFalse(move.isDrop());
         assertFalse(move.isSameDestination());
@@ -27,12 +28,13 @@ class MoveTest {
     @Test
     void createsDropMove() {
         Square to = new Square(5, 5);
-        Move move = new Move(Side.GOTE, null, to, PieceType.FU, false);
+        Move move = new Move(Side.GOTE, null, to, PieceType.FU, false, false);
 
         assertEquals(Side.GOTE, move.side());
         assertNull(move.from());
         assertEquals(to, move.to());
         assertEquals(PieceType.FU, move.pieceType());
+        assertFalse(move.promoted());
         assertFalse(move.promotion());
         assertTrue(move.isDrop());
         assertFalse(move.isSameDestination());
@@ -45,9 +47,11 @@ class MoveTest {
                 new Square(5, 7),
                 new Square(5, 6),
                 PieceType.HI,
+                false,
                 true);
 
         assertEquals(Side.SENTE, move.side());
+        assertFalse(move.promoted());
         assertTrue(move.promotion());
         assertFalse(move.isDrop());
         assertFalse(move.isSameDestination());
@@ -60,12 +64,14 @@ class MoveTest {
                 new Square(5, 2),
                 null,
                 PieceType.GIN,
+                false,
                 false);
 
         assertEquals(Side.GOTE, move.side());
         assertEquals(new Square(5, 2), move.from());
         assertNull(move.to());
         assertEquals(PieceType.GIN, move.pieceType());
+        assertFalse(move.promoted());
         assertFalse(move.promotion());
         assertFalse(move.isDrop());
         assertTrue(move.isSameDestination());
@@ -79,6 +85,7 @@ class MoveTest {
                         null,
                         new Square(5, 5),
                         PieceType.FU,
+                        false,
                         true));
     }
 
@@ -90,6 +97,7 @@ class MoveTest {
                         new Square(5, 9),
                         new Square(5, 8),
                         PieceType.FU,
+                        false,
                         false));
     }
 
@@ -101,6 +109,7 @@ class MoveTest {
                         new Square(5, 9),
                         new Square(5, 8),
                         null,
+                        false,
                         false));
     }
 }
