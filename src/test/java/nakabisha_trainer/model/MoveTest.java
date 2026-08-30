@@ -41,6 +41,24 @@ class MoveTest {
     }
 
     @Test
+    void createsPromotedPieceMove() {
+        Move move = new Move(
+                Side.SENTE,
+                new Square(5, 7),
+                new Square(5, 6),
+                PieceType.KA,
+                true,
+                false);
+
+        assertEquals(Side.SENTE, move.side());
+        assertEquals(PieceType.KA, move.pieceType());
+        assertTrue(move.promoted());
+        assertFalse(move.promotion());
+        assertFalse(move.isDrop());
+        assertFalse(move.isSameDestination());
+    }
+
+    @Test
     void createsPromotionMove() {
         Move move = new Move(
                 Side.SENTE,
