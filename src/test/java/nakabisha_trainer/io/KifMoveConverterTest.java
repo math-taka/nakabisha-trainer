@@ -1,5 +1,9 @@
 package nakabisha_trainer.io;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+
 import nakabisha_trainer.model.Move;
 import nakabisha_trainer.model.PieceType;
 import nakabisha_trainer.model.Side;
@@ -9,6 +13,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class KifMoveConverterTest {
+
+    private static final Path SENTE_NAKABISHA_KIF_PATH =
+            Path.of("test-data/kif/sente_nakabisha.kif");
 
     @Test
     void convertsJapaneseNumeralsToSquare() {
@@ -98,5 +105,16 @@ class KifMoveConverterTest {
     void convertsSameMoveWithModifier() {
         Move move = KifMoveConverter.convert("  81 同　歩左(67)   ( 0:01/00:00:00)");
         assertEquals(new Move(Side.SENTE, new Square(6, 7), null, PieceType.FU, false), move);
+    }
+
+    @Test
+    void convertsAllMovesInSenteNakabishaKif() throws IOException {
+        List<String> lines = KifReader.read(SENTE_NAKABISHA_KIF_PATH);
+
+        List<Move> moves = lines.stream()
+                .map(KifMoveConverter::convert)
+                .toList();
+
+        assertEquals(110, moves.size());
     }
 }
