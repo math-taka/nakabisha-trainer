@@ -15,6 +15,9 @@ class KifReaderTest {
     private static final Path KIF_PATH =
             Path.of("test-data/kif/nakabisha_with_comment.kif");
 
+    private static final Path SENTE_NAKABISHA_KIF_PATH =
+            Path.of("test-data/kif/sente_nakabisha.kif");
+
     @Test
     void readsMoveLinesWithoutComments() throws IOException {
         List<String> moves = KifReader.read(KIF_PATH);
@@ -53,7 +56,7 @@ class KifReaderTest {
 
     @Test
     void readsSameMoveLines() throws IOException {
-        List<String> moves = KifReader.read(KIF_PATH);
+        List<String> moves = KifReader.read(SENTE_NAKABISHA_KIF_PATH);
 
         assertTrue(
                 moves.stream().anyMatch(line -> line.matches(
