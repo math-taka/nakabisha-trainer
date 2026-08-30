@@ -73,7 +73,7 @@ class PositionTest {
         senteHand.add(PieceType.HI);
         Position position = new Position(board, senteHand, goteHand, Side.SENTE);
         Square to = new Square(5, 5);
-        Move move = new Move(Side.SENTE, null, to, PieceType.HI, false);
+        Move move = new Move(Side.SENTE, null, to, PieceType.HI, false, false);
         Position next = position.apply(move);
         assertEquals(new Piece(Side.SENTE, PieceType.HI, false), next.pieceAt(to));
         assertEquals(0, next.hand(Side.SENTE).count(PieceType.HI));
@@ -88,7 +88,7 @@ class PositionTest {
         senteHand.add(PieceType.HI);
         Position position = new Position(board, senteHand, goteHand, Side.SENTE);
         Square to = new Square(5, 5);
-        Move move = new Move(Side.SENTE, null, to, PieceType.HI, false);
+        Move move = new Move(Side.SENTE, null, to, PieceType.HI, false, false);
         Position next = position.apply(move);
         assertNull(position.pieceAt(to));
         assertEquals(1, position.hand(Side.SENTE).count(PieceType.HI));
@@ -102,7 +102,7 @@ class PositionTest {
         Square to = new Square(2, 7);
         board[from.index()] = new Piece(Side.SENTE, PieceType.HI, false);
         Position position = new Position(board, new Hand(), new Hand(), Side.SENTE);
-        Move move = new Move(Side.SENTE, from, to, PieceType.HI, false);
+        Move move = new Move(Side.SENTE, from, to, PieceType.HI, false, false);
         Position next = position.apply(move);
         assertNull(next.pieceAt(from));
         assertEquals(new Piece(Side.SENTE, PieceType.HI, false), next.pieceAt(to));
@@ -117,7 +117,7 @@ class PositionTest {
         board[from.index()] = new Piece(Side.SENTE, PieceType.HI, false);
         board[to.index()] = new Piece(Side.GOTE, PieceType.GIN, false);
         Position position = new Position(board, new Hand(), new Hand(), Side.SENTE);
-        Move move = new Move(Side.SENTE, from, to, PieceType.HI, false);
+        Move move = new Move(Side.SENTE, from, to, PieceType.HI, false, false);
         Position next = position.apply(move);
         assertNull(next.pieceAt(from));
         assertEquals(new Piece(Side.SENTE, PieceType.HI, false), next.pieceAt(to));
@@ -131,7 +131,7 @@ class PositionTest {
         Square to = new Square(2, 6);
         board[from.index()] = new Piece(Side.SENTE, PieceType.HI, false);
         Position position = new Position(board, new Hand(), new Hand(), Side.SENTE);
-        Move move = new Move(Side.SENTE, from, to, PieceType.HI, true);
+        Move move = new Move(Side.SENTE, from, to, PieceType.HI, false, true);
         Position next = position.apply(move);
         assertNull(next.pieceAt(from));
         assertEquals(new Piece(Side.SENTE, PieceType.HI, true), next.pieceAt(to));
@@ -144,7 +144,7 @@ class PositionTest {
         Square to = new Square(2, 7);
         board[from.index()] = new Piece(Side.SENTE, PieceType.HI, false);
         Position position = new Position(board, new Hand(), new Hand(), Side.SENTE);
-        Move move = new Move(Side.SENTE, from, to, PieceType.HI, false);
+        Move move = new Move(Side.SENTE, from, to, PieceType.HI, false, false);
         Position next = position.apply(move);
         assertEquals(new Piece(Side.SENTE, PieceType.HI, false), position.pieceAt(from));
         assertNull(position.pieceAt(to));
