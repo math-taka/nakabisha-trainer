@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class KifMoveConverter {
 
-    private static final String PIECE = "歩|香|桂|銀|金|角|飛|玉";
+    private static final String PIECE = "歩|香|桂|銀|金|角|飛|玉|と|成香|成桂|成銀|馬|龍|竜";
     private static final String MODIFIER = "(?:左|右|直|引|寄|上)?";
 
     private static final Pattern NORMAL_MOVE_PATTERN = Pattern.compile(
@@ -39,6 +39,9 @@ public class KifMoveConverter {
                     + ".*$"
     );
 
+    private record ParsedPiece(PieceType pieceType, boolean promoted) {
+    }
+
     private KifMoveConverter() {
     }
 
@@ -64,28 +67,28 @@ public class KifMoveConverter {
     private static Move convertNormalMove(Matcher matcher) {
         Side side = parseSide(matcher.group(1));
         Square to = parseSquare(matcher.group(2), matcher.group(3));
-        PieceType pieceType = parsePieceType(matcher.group(4));
+        ParsedPiece piece = parsePiece(matcher.group(4));
         Square from = parseSquare(matcher.group(6), matcher.group(7));
         boolean promotion = matcher.group(5) != null;
 
-        return new Move(side, from, to, pieceType, false, promotion);
+        return new Move(side, from, to, piece.pieceType(), piece.promoted(), promotion);
     }
 
     private static Move convertDropMove(Matcher matcher) {
         Side side = parseSide(matcher.group(1));
         Square to = parseSquare(matcher.group(2), matcher.group(3));
-        PieceType pieceType = parsePieceType(matcher.group(4));
+        ParsedPiece piece = parsePiece(matcher.group(4));
 
-        return new Move(side, null, to, pieceType, false, false);
+        return new Move(side, null, to, piece.pieceType(), piece.promoted(), false);
     }
 
     private static Move convertSameMove(Matcher matcher) {
         Side side = parseSide(matcher.group(1));
-        PieceType pieceType = parsePieceType(matcher.group(2));
+        ParsedPiece piece = parsePiece(matcher.group(2));
         Square from = parseSquare(matcher.group(4), matcher.group(5));
         boolean promotion = matcher.group(3) != null;
 
-        return new Move(side, from, null, pieceType, false, promotion);
+        return new Move(side, from, null, piece.pieceType(), piece.promoted(), promotion);
     }
 
     private static Side parseSide(String moveNumber) {
@@ -126,6 +129,27 @@ public class KifMoveConverter {
             case "角" -> PieceType.KAKU;
             case "飛" -> PieceType.HI;
             case "玉" -> PieceType.OU;
+            default -> throw new IllegalArgumentException(
+                    "Unsupported piece: " + value);
+        };
+    }
+
+    private static ParsedPiece parsePiece(String value) {
+        return switch (value) {
+            case "歩" -> new ParsedPiece(PieceType.FU, false);
+            case "香" -> new ParsedPiece(PieceType.KYO, false);
+            case "桂" -> new ParsedPiece(PieceType.KEI, false);
+            case "銀" -> new ParsedPiece(PieceType.GIN, false);
+            case "金" -> new ParsedPiece(PieceType.KIN, false);
+            case "角" -> new ParsedPiece(PieceType.KAKU, false);
+            case "飛" -> new ParsedPiece(PieceType.HI, false);
+            case "玉" -> new ParsedPiece(PieceType.OU, false);
+            case "と" -> new ParsedPiece(PieceType.FU, true);
+            case "成香" -> new ParsedPiece(PieceType.KYO, true);
+            case "成桂" -> new ParsedPiece(PieceType.KEI, true);
+            case "成銀" -> new ParsedPiece(PieceType.GIN, true);
+            case "馬" -> new ParsedPiece(PieceType.KAKU, true);
+            case "龍", "竜" -> new ParsedPiece(PieceType.HI, true);
             default -> throw new IllegalArgumentException(
                     "Unsupported piece: " + value);
         };
