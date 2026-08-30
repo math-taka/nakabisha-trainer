@@ -49,62 +49,62 @@ class KifMoveConverterTest {
     @Test
     void convertsFirstMove() {
         Move move = KifMoveConverter.convert("   1 ５六歩(57)   ( 0:00/00:00:00)");
-        assertEquals(new Move(Side.SENTE, new Square(5, 7), new Square(5, 6), PieceType.FU, false), move);
+        assertEquals(new Move(Side.SENTE, new Square(5, 7), new Square(5, 6), PieceType.FU, false, false), move);
     }
 
     @Test
     void convertsSecondMove() {
         Move move = KifMoveConverter.convert("   2 ３四歩(33)   ( 0:01/00:00:01)");
-        assertEquals(new Move(Side.GOTE, new Square(3, 3), new Square(3, 4), PieceType.FU, false), move);
+        assertEquals(new Move(Side.GOTE, new Square(3, 3), new Square(3, 4), PieceType.FU, false, false), move);
     }
 
     @Test
     void convertsThirdMove() {
         Move move = KifMoveConverter.convert("   3 ５八飛(28)   ( 0:01/00:00:01)");
-        assertEquals(new Move(Side.SENTE, new Square(2, 8), new Square(5, 8), PieceType.HI, false), move);
+        assertEquals(new Move(Side.SENTE, new Square(2, 8), new Square(5, 8), PieceType.HI, false, false), move);
     }
 
     @Test
     void convertsPromotingMove() {
         Move move = KifMoveConverter.convert("   7 ２二角成(88)   ( 0:01/00:00:04)");
-        assertEquals(new Move(Side.SENTE, new Square(8, 8), new Square(2, 2), PieceType.KAKU, true), move);
+        assertEquals(new Move(Side.SENTE, new Square(8, 8), new Square(2, 2), PieceType.KAKU, false, true), move);
     }
 
     @Test
     void convertsDropMove() {
         Move move = KifMoveConverter.convert("   9 ６五角打   ( 0:01/00:00:05)");
-        assertEquals(new Move(Side.SENTE, null, new Square(6, 5), PieceType.KAKU, false), move);
+        assertEquals(new Move(Side.SENTE, null, new Square(6, 5), PieceType.KAKU, false, false), move);
     }
 
     @Test
     void convertsSameMoveWithFullWidthSpace() {
         String line = "   8 同　銀(31)   ( 0:01/00:00:05)";
         Move move = KifMoveConverter.convert(line);
-        assertEquals(new Move(Side.GOTE, new Square(3, 1), null, PieceType.GIN, false), move);
+        assertEquals(new Move(Side.GOTE, new Square(3, 1), null, PieceType.GIN, false, false), move);
     }
 
     @Test
     void convertsSamePromotingMove() {
         Move move = KifMoveConverter.convert("  54 同　桂成(25)   ( 0:01/00:00:00)");
-        assertEquals(new Move(Side.GOTE, new Square(2, 5), null, PieceType.KEI, true), move);
+        assertEquals(new Move(Side.GOTE, new Square(2, 5), null, PieceType.KEI, false, true), move);
     }
 
     @Test
     void convertsMoveWithModifier() {
         Move move = KifMoveConverter.convert("  37 ５五銀左(56)   ( 0:01/00:00:00)");
-        assertEquals(new Move(Side.SENTE, new Square(5, 6), new Square(5, 5), PieceType.GIN, false), move);
+        assertEquals(new Move(Side.SENTE, new Square(5, 6), new Square(5, 5), PieceType.GIN, false, false), move);
     }
 
     @Test
     void convertsPromotingMoveWithModifier() {
         Move move = KifMoveConverter.convert("  38 ５四銀引成(55)   ( 0:01/00:00:00)");
-        assertEquals(new Move(Side.GOTE, new Square(5, 5), new Square(5, 4), PieceType.GIN, true), move);
+        assertEquals(new Move(Side.GOTE, new Square(5, 5), new Square(5, 4), PieceType.GIN, false, true), move);
     }
 
     @Test
     void convertsSameMoveWithModifier() {
         Move move = KifMoveConverter.convert("  81 同　歩左(67)   ( 0:01/00:00:00)");
-        assertEquals(new Move(Side.SENTE, new Square(6, 7), null, PieceType.FU, false), move);
+        assertEquals(new Move(Side.SENTE, new Square(6, 7), null, PieceType.FU, false, false), move);
     }
 
     @Test
