@@ -43,6 +43,11 @@ public class KifMoveConverter {
     }
 
     public static Move convert(String line) {
+        System.out.println("line=[" + line + "]");
+        System.out.println("SAME=" + SAME_MOVE_PATTERN.matcher(line).matches());
+        System.out.println("DROP=" + DROP_MOVE_PATTERN.matcher(line).matches());
+        System.out.println("NORMAL=" + NORMAL_MOVE_PATTERN.matcher(line).matches());
+
         Matcher matcher = SAME_MOVE_PATTERN.matcher(line);
         if (matcher.matches()) {
             return convertSameMove(matcher);
