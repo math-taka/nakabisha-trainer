@@ -6,8 +6,6 @@ import nakabisha_trainer.model.Side;
 import nakabisha_trainer.model.Square;
 import org.junit.jupiter.api.Test;
 
-import java.util.regex.Pattern;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class KifMoveConverterTest {
@@ -74,19 +72,6 @@ class KifMoveConverterTest {
     @Test
     void convertsSameMoveWithFullWidthSpace() {
         String line = "   8 同　銀(31)   ( 0:01/00:00:05)";
-        System.out.println("line=[" + line + "]");
-        line.codePoints()
-                .forEach(c -> System.out.printf("U+%04X '%c'%n", c, c));
-
-        System.out.println("[DEBUG] same prefix: "
-                + Pattern.compile("^\\s*\\d+\\s+同").matcher(line).find());
-        System.out.println("[DEBUG] same with whitespace: "
-                + Pattern.compile("^\\s*\\d+\\s+同\\s*").matcher(line).find());
-        System.out.println("[DEBUG] same with piece: "
-                + Pattern.compile("^\\s*\\d+\\s+同\\s*(歩|香|桂|銀|金|角|飛|玉)").matcher(line).find());
-        System.out.println("[DEBUG] same with opening parenthesis: "
-                + Pattern.compile("^\\s*\\d+\\s+同\\s*(歩|香|桂|銀|金|角|飛|玉)\\(").matcher(line).find());
-
         Move move = KifMoveConverter.convert(line);
         assertEquals(new Move(Side.GOTE, new Square(3, 1), null, PieceType.GIN, false), move);
     }
