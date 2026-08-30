@@ -46,12 +46,12 @@ class MoveTest {
                 Side.SENTE,
                 new Square(5, 7),
                 new Square(5, 6),
-                PieceType.KA,
+                PieceType.KAKU,
                 true,
                 false);
 
         assertEquals(Side.SENTE, move.side());
-        assertEquals(PieceType.KA, move.pieceType());
+        assertEquals(PieceType.KAKU, move.pieceType());
         assertTrue(move.promoted());
         assertFalse(move.promotion());
         assertFalse(move.isDrop());
