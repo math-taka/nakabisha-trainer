@@ -32,7 +32,7 @@ public class KifMoveConverter {
 
     private static final Pattern SAME_MOVE_PATTERN = Pattern.compile(
             "^\\s*(\\d+)\\s+"
-                    + "同\\s*(" + PIECE + ")"
+                    + "同[\\s\\u3000]*(" + PIECE + ")"
                     + MODIFIER
                     + "(成)?"
                     + "\\(([1-9])([1-9])\\)"
