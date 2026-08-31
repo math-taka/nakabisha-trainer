@@ -138,6 +138,48 @@ class KifMoveConverterTest {
     }
 
     @Test
+    void convertsPromotingRookMove() {
+        Move move = KifMoveConverter.convert("  58 ７八飛成(74)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.GOTE, new Square(7, 4), new Square(7, 8), PieceType.HI, false, true), move);
+    }
+
+    @Test
+    void convertsPromotedRookMove() {
+        Move move = KifMoveConverter.convert("  67 ４一龍(32)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.SENTE, new Square(3, 2), new Square(4, 1), PieceType.HI, true, false), move);
+    }
+
+    @Test
+    void convertsPromotingLanceMove() {
+        Move move = KifMoveConverter.convert("  79 ６一香成(62)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.SENTE, new Square(6, 2), new Square(6, 1), PieceType.KYO, false, true), move);
+    }
+
+    @Test
+    void convertsPromotedLanceMove() {
+        Move move = KifMoveConverter.convert("  81 ６二成香(61)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.SENTE, new Square(6, 1), new Square(6, 2), PieceType.KYO, true, false), move);
+    }
+
+    @Test
+    void convertsPromotingKnightMove() {
+        Move move = KifMoveConverter.convert("  61 ５三桂成(65)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.SENTE, new Square(6, 5), new Square(5, 3), PieceType.KEI, false, true), move);
+    }
+
+    @Test
+    void convertsPromotedKnightMove() {
+        Move move = KifMoveConverter.convert("  62 ５三金(52)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.GOTE, new Square(5, 2), new Square(5, 3), PieceType.KIN, false, false), move);
+    }
+
+    @Test
+    void convertsPromotedBishopMoveFromAnotherKif() {
+        Move move = KifMoveConverter.convert("  48 同　馬(99)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.SENTE, new Square(9, 9), null, PieceType.KAKU, true, false), move);
+    }
+
+    @Test
     void convertsAllMovesInSenteNakabishaKif() throws IOException {
         List<String> lines = KifReader.read(SENTE_NAKABISHA_KIF_PATH);
 
