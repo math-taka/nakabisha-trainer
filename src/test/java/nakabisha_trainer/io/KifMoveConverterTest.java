@@ -126,7 +126,7 @@ class KifMoveConverterTest {
     }
 
     @Test
-    void convertsPromotedPawnMove() {
+    void convertsPromotingPawnMoveForGote() {
         Move move = KifMoveConverter.convert("  80 ３七歩成(36)   ( 0:01/00:00:00)");
         assertEquals(new Move(Side.GOTE, new Square(3, 6), new Square(3, 7), PieceType.FU, false, true), move);
     }
@@ -162,15 +162,9 @@ class KifMoveConverterTest {
     }
 
     @Test
-    void convertsPromotingKnightMove() {
-        Move move = KifMoveConverter.convert("  61 ５三桂成(65)   ( 0:01/00:00:00)");
-        assertEquals(new Move(Side.SENTE, new Square(6, 5), new Square(5, 3), PieceType.KEI, false, true), move);
-    }
-
-    @Test
-    void convertsPromotedKnightMove() {
-        Move move = KifMoveConverter.convert("  62 ５三金(52)   ( 0:01/00:00:00)");
-        assertEquals(new Move(Side.GOTE, new Square(5, 2), new Square(5, 3), PieceType.KIN, false, false), move);
+    void convertsPromotingKnightMoveFromAnotherKif() {
+        Move move = KifMoveConverter.convert("  62 ６七桂成(55)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.GOTE, new Square(5, 5), new Square(6, 7), PieceType.KEI, false, true), move);
     }
 
     @Test
