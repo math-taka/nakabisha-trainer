@@ -108,6 +108,36 @@ class KifMoveConverterTest {
     }
 
     @Test
+    void convertsPromotingSilverMove() {
+        Move move = KifMoveConverter.convert("  75 同　銀成(44)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.SENTE, new Square(4, 4), null, PieceType.GIN, false, true), move);
+    }
+
+    @Test
+    void convertsPromotedSilverMove() {
+        Move move = KifMoveConverter.convert("  77 ５二成銀(53)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.SENTE, new Square(5, 3), new Square(5, 2), PieceType.GIN, true, false), move);
+    }
+
+    @Test
+    void convertsPromotingPawnMove() {
+        Move move = KifMoveConverter.convert("  73 ５三歩成(54)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.SENTE, new Square(5, 4), new Square(5, 3), PieceType.FU, false, true), move);
+    }
+
+    @Test
+    void convertsPromotedPawnMove() {
+        Move move = KifMoveConverter.convert("  80 ３七歩成(36)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.GOTE, new Square(3, 6), new Square(3, 7), PieceType.FU, false, true), move);
+    }
+
+    @Test
+    void convertsPromotedBishopMove() {
+        Move move = KifMoveConverter.convert("  81 同　馬(73)   ( 0:01/00:00:00)");
+        assertEquals(new Move(Side.SENTE, new Square(7, 3), null, PieceType.KAKU, true, false), move);
+    }
+
+    @Test
     void convertsAllMovesInSenteNakabishaKif() throws IOException {
         List<String> lines = KifReader.read(SENTE_NAKABISHA_KIF_PATH);
 
