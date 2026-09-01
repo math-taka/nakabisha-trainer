@@ -170,7 +170,7 @@ class KifMoveConverterTest {
     @Test
     void convertsPromotedBishopMoveFromAnotherKif() {
         Move move = KifMoveConverter.convert("  48 同　馬(99)   ( 0:01/00:00:00)");
-        assertEquals(new Move(Side.SENTE, new Square(9, 9), null, PieceType.KAKU, true, false), move);
+        assertEquals(new Move(Side.GOTE, new Square(9, 9), null, PieceType.KAKU, true, false), move);
     }
 
     @Test
