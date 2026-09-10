@@ -42,13 +42,15 @@ class KifGameRecordPositionIntegrationTest {
         assertEquals(PieceType.OU, position.pieceAt(new Square(7, 2)).type());
         assertEquals(Side.GOTE, position.pieceAt(new Square(5, 2)).side());
         assertEquals(PieceType.KIN, position.pieceAt(new Square(5, 2)).type());
+        assertEquals(Side.GOTE, position.pieceAt(new Square(2, 2)).side());
+        assertEquals(PieceType.GIN, position.pieceAt(new Square(2, 2)).type());
         assertEquals(Side.GOTE, position.pieceAt(new Square(1, 4)).side());
         assertEquals(PieceType.FU, position.pieceAt(new Square(1, 4)).type());
 
         assertNull(position.pieceAt(new Square(8, 8)));
-        assertNull(position.pieceAt(new Square(2, 2)));
         assertNull(position.pieceAt(new Square(6, 5)));
         assertNull(position.pieceAt(new Square(5, 4)));
+        assertNull(position.pieceAt(new Square(6, 8)));
 
         assertEquals(1, position.hand(Side.SENTE).count(PieceType.KAKU));
         assertEquals(1, position.hand(Side.GOTE).count(PieceType.KAKU));
