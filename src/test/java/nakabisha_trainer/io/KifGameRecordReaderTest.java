@@ -42,4 +42,19 @@ class KifGameRecordReaderTest {
                         PieceType.HI, false, false),
                 moves.get(2));
     }
+
+    @Test
+    void resolvesSameDestination() throws Exception {
+        GameRecord record = KifGameRecordReader.read(KIF_PATH);
+        List<Move> moves = record.moves();
+
+        assertEquals(
+                new Move(Side.SENTE, new Square(8, 8), new Square(2, 2),
+                        PieceType.KAKU, true, true),
+                moves.get(6));
+        assertEquals(
+                new Move(Side.GOTE, new Square(3, 1), new Square(2, 2),
+                        PieceType.GIN, false, false),
+                moves.get(7));
+    }
 }
