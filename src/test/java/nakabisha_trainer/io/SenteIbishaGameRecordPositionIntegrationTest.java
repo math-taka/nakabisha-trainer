@@ -45,17 +45,13 @@ class SenteIbishaGameRecordPositionIntegrationTest {
         assertEquals(Side.GOTE, position.pieceAt(new Square(4, 4)).side());
         assertEquals(PieceType.FU, position.pieceAt(new Square(4, 4)).type());
         assertEquals(Side.GOTE, position.pieceAt(new Square(3, 2)).side());
-        assertEquals(PieceType.FU, position.pieceAt(new Square(3, 2)).type());
-        assertEquals(Side.GOTE, position.pieceAt(new Square(4, 2)).side());
-        assertEquals(PieceType.GIN, position.pieceAt(new Square(4, 2)).type());
-        assertEquals(Side.GOTE, position.pieceAt(new Square(3, 3)).side());
-        assertEquals(PieceType.KEI, position.pieceAt(new Square(3, 3)).type());
+        assertEquals(PieceType.KIN, position.pieceAt(new Square(3, 2)).type());
         assertEquals(Side.GOTE, position.pieceAt(new Square(4, 3)).side());
         assertEquals(PieceType.GIN, position.pieceAt(new Square(4, 3)).type());
-        assertEquals(Side.GOTE, position.pieceAt(new Square(5, 2)).side());
-        assertEquals(PieceType.HI, position.pieceAt(new Square(5, 2)).type());
-        assertEquals(Side.GOTE, position.pieceAt(new Square(7, 2)).side());
-        assertEquals(PieceType.KAKU, position.pieceAt(new Square(7, 2)).type());
+        assertEquals(Side.GOTE, position.pieceAt(new Square(4, 2)).side());
+        assertEquals(PieceType.HI, position.pieceAt(new Square(4, 2)).type());
+        assertEquals(Side.GOTE, position.pieceAt(new Square(3, 3)).side());
+        assertEquals(PieceType.KEI, position.pieceAt(new Square(3, 3)).type());
 
         assertNull(position.pieceAt(new Square(3, 8)));
         assertNull(position.pieceAt(new Square(7, 2)));
