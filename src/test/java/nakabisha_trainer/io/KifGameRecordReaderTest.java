@@ -50,7 +50,7 @@ class KifGameRecordReaderTest {
 
         assertEquals(
                 new Move(Side.SENTE, new Square(8, 8), new Square(2, 2),
-                        PieceType.KAKU, true, true),
+                        PieceType.KAKU, false, true),
                 moves.get(6));
         assertEquals(
                 new Move(Side.GOTE, new Square(3, 1), new Square(2, 2),
