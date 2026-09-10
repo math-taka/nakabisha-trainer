@@ -17,6 +17,24 @@ class KifMoveConverterTest {
     private static final Path SENTE_NAKABISHA_KIF_PATH =
             Path.of("test-data/kif/sente_nakabisha.kif");
 
+    private static final Path GOTE_MUKAIBISHA_KIF_PATH =
+            Path.of("test-data/kif/gote_mukaibisha.kif");
+
+    private static final Path GOTE_NAKABISHA1_KIF_PATH =
+            Path.of("test-data/kif/gote_nakabisha1.kif");
+
+    private static final Path SENTE_IBISHA_KIF_PATH =
+            Path.of("test-data/kif/sente_ibisha.kif");
+
+    private static final Path SENTE_NAKABISHA2_KIF_PATH =
+            Path.of("test-data/kif/sente_nakabisha2.kif");
+
+    private static final Path SENTE_NAKABISHA3_KIF_PATH =
+            Path.of("test-data/kif/sente_nakabisha3.kif");
+
+    private static final Path NAKABISHA_WITH_COMMENT_KIF_PATH =
+            Path.of("test-data/kif/nakabisha_with_comment.kif");
+
     @Test
     void convertsJapaneseNumeralsToSquare() {
         assertEquals(new Square(5, 3), KifMoveConverter.parseSquare("５", "三"));
@@ -182,5 +200,71 @@ class KifMoveConverterTest {
                 .toList();
 
         assertEquals(110, moves.size());
+    }
+
+    @Test
+    void convertsAllMovesInGoteMukaibishaKif() throws IOException {
+        List<String> lines = KifReader.read(GOTE_MUKAIBISHA_KIF_PATH);
+
+        List<Move> moves = lines.stream()
+                .map(KifMoveConverter::convert)
+                .toList();
+
+        assertEquals(71, moves.size());
+    }
+
+    @Test
+    void convertsAllMovesInGoteNakabisha1Kif() throws IOException {
+        List<String> lines = KifReader.read(GOTE_NAKABISHA1_KIF_PATH);
+
+        List<Move> moves = lines.stream()
+                .map(KifMoveConverter::convert)
+                .toList();
+
+        assertEquals(87, moves.size());
+    }
+
+    @Test
+    void convertsAllMovesInSenteIbishaKif() throws IOException {
+        List<String> lines = KifReader.read(SENTE_IBISHA_KIF_PATH);
+
+        List<Move> moves = lines.stream()
+                .map(KifMoveConverter::convert)
+                .toList();
+
+        assertEquals(66, moves.size());
+    }
+
+    @Test
+    void convertsAllMovesInSenteNakabisha2Kif() throws IOException {
+        List<String> lines = KifReader.read(SENTE_NAKABISHA2_KIF_PATH);
+
+        List<Move> moves = lines.stream()
+                .map(KifMoveConverter::convert)
+                .toList();
+
+        assertEquals(94, moves.size());
+    }
+
+    @Test
+    void convertsAllMovesInSenteNakabisha3Kif() throws IOException {
+        List<String> lines = KifReader.read(SENTE_NAKABISHA3_KIF_PATH);
+
+        List<Move> moves = lines.stream()
+                .map(KifMoveConverter::convert)
+                .toList();
+
+        assertEquals(67, moves.size());
+    }
+
+    @Test
+    void convertsAllMovesInNakabishaWithCommentKif() throws IOException {
+        List<String> lines = KifReader.read(NAKABISHA_WITH_COMMENT_KIF_PATH);
+
+        List<Move> moves = lines.stream()
+                .map(KifMoveConverter::convert)
+                .toList();
+
+        assertEquals(120, moves.size());
     }
 }
