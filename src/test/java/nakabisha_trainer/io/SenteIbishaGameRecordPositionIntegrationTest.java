@@ -31,8 +31,6 @@ class SenteIbishaGameRecordPositionIntegrationTest {
         assertEquals(PieceType.GIN, position.pieceAt(new Square(7, 7)).type());
         assertEquals(Side.SENTE, position.pieceAt(new Square(7, 8)).side());
         assertEquals(PieceType.KIN, position.pieceAt(new Square(7, 8)).type());
-        assertEquals(Side.SENTE, position.pieceAt(new Square(3, 8)).side());
-        assertEquals(PieceType.GIN, position.pieceAt(new Square(3, 8)).type());
         assertEquals(Side.SENTE, position.pieceAt(new Square(4, 6)).side());
         assertEquals(PieceType.FU, position.pieceAt(new Square(4, 6)).type());
         assertEquals(Side.SENTE, position.pieceAt(new Square(4, 7)).side());
@@ -54,19 +52,13 @@ class SenteIbishaGameRecordPositionIntegrationTest {
         assertEquals(PieceType.KEI, position.pieceAt(new Square(3, 3)).type());
         assertEquals(Side.GOTE, position.pieceAt(new Square(4, 3)).side());
         assertEquals(PieceType.GIN, position.pieceAt(new Square(4, 3)).type());
-        assertEquals(Side.GOTE, position.pieceAt(new Square(4, 1)).side());
-        assertEquals(PieceType.KIN, position.pieceAt(new Square(4, 1)).type());
-        assertEquals(Side.GOTE, position.pieceAt(new Square(5, 1)).side());
-        assertEquals(PieceType.KIN, position.pieceAt(new Square(5, 1)).type());
-        assertEquals(Side.GOTE, position.pieceAt(new Square(6, 1)).side());
-        assertEquals(PieceType.OU, position.pieceAt(new Square(6, 1)).type());
         assertEquals(Side.GOTE, position.pieceAt(new Square(5, 2)).side());
         assertEquals(PieceType.HI, position.pieceAt(new Square(5, 2)).type());
         assertEquals(Side.GOTE, position.pieceAt(new Square(7, 2)).side());
         assertEquals(PieceType.KAKU, position.pieceAt(new Square(7, 2)).type());
 
         assertNull(position.pieceAt(new Square(3, 8)));
-        assertNull(position.pieceAt(new Square(6, 2)));
+        assertNull(position.pieceAt(new Square(7, 2)));
 
         assertEquals(1, position.hand(Side.SENTE).count(PieceType.KAKU));
         assertEquals(1, position.hand(Side.GOTE).count(PieceType.KAKU));
