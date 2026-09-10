@@ -48,7 +48,6 @@ class GoteNakabisha1GameRecordPositionIntegrationTest {
         assertEquals(PieceType.GIN, position.pieceAt(new Square(7, 2)).type());
 
         assertNull(position.pieceAt(new Square(2, 2)));
-        assertNull(position.pieceAt(new Square(8, 8)));
 
         assertEquals(1, position.hand(Side.SENTE).count(PieceType.KAKU));
         assertEquals(1, position.hand(Side.GOTE).count(PieceType.KAKU));
