@@ -30,13 +30,16 @@ class KifGameRecordReaderTest {
         List<Move> moves = record.moves();
 
         assertEquals(
-                new Move(Side.SENTE, null, new Square(7, 7), PieceType.FU, false, false),
+                new Move(Side.SENTE, new Square(5, 7), new Square(5, 6),
+                        PieceType.FU, false, false),
                 moves.get(0));
         assertEquals(
-                new Move(Side.GOTE, null, new Square(3, 3), PieceType.FU, false, false),
+                new Move(Side.GOTE, new Square(3, 3), new Square(3, 4),
+                        PieceType.FU, false, false),
                 moves.get(1));
         assertEquals(
-                new Move(Side.SENTE, null, new Square(2, 7), PieceType.FU, false, false),
+                new Move(Side.SENTE, new Square(2, 8), new Square(5, 8),
+                        PieceType.HI, false, false),
                 moves.get(2));
     }
 }
