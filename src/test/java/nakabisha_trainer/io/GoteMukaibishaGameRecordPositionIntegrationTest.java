@@ -50,6 +50,7 @@ class GoteMukaibishaGameRecordPositionIntegrationTest {
 
         assertEquals(1, position.hand(Side.SENTE).count(PieceType.HI));
         assertEquals(1, position.hand(Side.GOTE).count(PieceType.HI));
+        assertEquals(1, position.hand(Side.GOTE).count(PieceType.FU));
         assertEquals(Side.SENTE, position.sideToMove());
     }
 }
