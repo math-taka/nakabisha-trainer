@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -150,6 +153,168 @@ class PositionTest {
         assertNull(position.pieceAt(to));
         assertNull(next.pieceAt(from));
         assertEquals(new Piece(Side.SENTE, PieceType.HI, false), next.pieceAt(to));
+    }
+
+    @Test
+    void initialPositionHasExpectedFeatures() {
+        Position position = Position.initial();
+
+        PositionFeatures features = position.features();
+
+        assertEquals(
+                List.of(
+                        new PieceFeature(
+                                Side.GOTE,
+                                new Square(8, 2).index(),
+                                false),
+                        new PieceFeature(
+                                Side.SENTE,
+                                new Square(2, 8).index(),
+                                false)
+                ),
+                features.hisha()
+        );
+
+        assertEquals(
+                List.of(
+                        new PieceFeature(
+                                Side.GOTE,
+                                new Square(2, 2).index(),
+                                false),
+                        new PieceFeature(
+                                Side.SENTE,
+                                new Square(8, 8).index(),
+                                false)
+                ),
+                features.kaku()
+        );
+
+        assertEquals(
+                List.of(
+                        new PieceFeature(
+                                Side.GOTE,
+                                new Square(5, 1).index(),
+                                false),
+                        new PieceFeature(
+                                Side.SENTE,
+                                new Square(5, 9).index(),
+                                false)
+                ),
+                features.ou()
+        );
+
+        assertEquals(
+                List.of(
+                        new PieceFeature(
+                                Side.GOTE,
+                                new Square(7, 1).index(),
+                                false),
+                        new PieceFeature(
+                                Side.GOTE,
+                                new Square(3, 1).index(),
+                                false),
+                        new PieceFeature(
+                                Side.SENTE,
+                                new Square(7, 9).index(),
+                                false),
+                        new PieceFeature(
+                                Side.SENTE,
+                                new Square(3, 9).index(),
+                                false)
+                ),
+                features.gin()
+        );
+    }
+
+    @Test
+    void promotedPieceHasPromotedFeature() {
+        Piece[] board = createBoardWithTargetPieces();
+
+        board[new Square(5, 5).index()] =
+                new Piece(Side.SENTE, PieceType.HI, true);
+
+        Position position = new Position(
+                board,
+                new Hand(),
+                new Hand(),
+                Side.SENTE
+        );
+
+        PositionFeatures features = position.features();
+
+        assertTrue(features.hisha().contains(
+                new PieceFeature(
+                        Side.SENTE,
+                        new Square(5, 5).index(),
+                        true)
+        ));
+    }
+
+    @Test
+    void boardAndHandPiecesAreCombinedIntoFeatures() {
+        Piece[] board = createBoardWithTargetPieces();
+
+        board[new Square(5, 5).index()] = null;
+
+        Hand senteHand = new Hand();
+        senteHand.add(PieceType.HI);
+
+        Position position = new Position(
+                board,
+                senteHand,
+                new Hand(),
+                Side.SENTE
+        );
+
+        PositionFeatures features = position.features();
+
+        assertEquals(
+                List.of(
+                        new PieceFeature(
+                                Side.GOTE,
+                                new Square(5, 2).index(),
+                                false),
+                        new PieceFeature(
+                                Side.SENTE,
+                                null,
+                                false)
+                ),
+                features.hisha()
+        );
+    }
+
+    private static Piece[] createBoardWithTargetPieces() {
+        Piece[] board = new Piece[81];
+
+        // 飛車2枚
+        board[new Square(5, 5).index()] =
+                new Piece(Side.SENTE, PieceType.HI, false);
+        board[new Square(5, 2).index()] =
+                new Piece(Side.GOTE, PieceType.HI, false);
+
+        // 角2枚
+        board[new Square(8, 8).index()] =
+                new Piece(Side.SENTE, PieceType.KAKU, false);
+        board[new Square(2, 2).index()] =
+                new Piece(Side.GOTE, PieceType.KAKU, false);
+
+        // 玉2枚
+        board[new Square(5, 9).index()] =
+                new Piece(Side.SENTE, PieceType.OU, false);
+        board[new Square(5, 1).index()] =
+                new Piece(Side.GOTE, PieceType.OU, false);
+
+        // 銀4枚
+        board[new Square(7, 7).index()] =
+                new Piece(Side.SENTE, PieceType.GIN, false);
+        board[new Square(3, 7).index()] =
+                new Piece(Side.SENTE, PieceType.GIN, false);
+        board[new Square(7, 3).index()] =
+                new Piece(Side.GOTE, PieceType.GIN, false);
+        board[new Square(3, 3).index()] =
+                new Piece(Side.GOTE, PieceType.GIN, false);
+
+        return board;
     }
 
     private static void assertPiece(Position position, int file, int rank, Side side, PieceType type) {
