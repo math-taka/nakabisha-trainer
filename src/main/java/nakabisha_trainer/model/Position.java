@@ -1,6 +1,8 @@
 package nakabisha_trainer.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public final class Position {
@@ -101,6 +103,56 @@ public final class Position {
         Side nextSide = sideToMove.opposite();
 
         return new Position(newBoard, newSenteHand, newGoteHand, nextSide);
+    }
+
+    public PositionFeatures features() {
+        List<PieceFeature> hisha = new ArrayList<>();
+        List<PieceFeature> kaku = new ArrayList<>();
+        List<PieceFeature> ou = new ArrayList<>();
+        List<PieceFeature> gin = new ArrayList<>();
+
+        for (int index = 0; index < board.length; index++) {
+            Piece piece = board[index];
+
+            if (piece == null) {
+                continue;
+            }
+
+            PieceFeature feature =
+                    new PieceFeature(piece.side(), index, piece.promoted());
+
+            switch (piece.type()) {
+                case HI -> hisha.add(feature);
+                case KAKU -> kaku.add(feature);
+                case OU -> ou.add(feature);
+                case GIN -> gin.add(feature);
+                default -> {
+                }
+            }
+        }
+
+        addHandFeatures(hisha, senteHand, Side.SENTE, PieceType.HI);
+        addHandFeatures(kaku, senteHand, Side.SENTE, PieceType.KAKU);
+        addHandFeatures(ou, senteHand, Side.SENTE, PieceType.OU);
+        addHandFeatures(gin, senteHand, Side.SENTE, PieceType.GIN);
+
+        addHandFeatures(hisha, goteHand, Side.GOTE, PieceType.HI);
+        addHandFeatures(kaku, goteHand, Side.GOTE, PieceType.KAKU);
+        addHandFeatures(ou, goteHand, Side.GOTE, PieceType.OU);
+        addHandFeatures(gin, goteHand, Side.GOTE, PieceType.GIN);
+
+        return new PositionFeatures(hisha, kaku, ou, gin);
+    }
+
+    private static void addHandFeatures(
+            List<PieceFeature> features,
+            Hand hand,
+            Side side,
+            PieceType pieceType) {
+
+        for (int i = 0; i < hand.count(pieceType); i++) {
+            features.add(new PieceFeature(side, null, false));
+        }
     }
 
     private static void applyDrop(
