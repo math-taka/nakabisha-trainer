@@ -15,22 +15,22 @@ class PositionFeaturesTest {
     @Test
     void 正しい個数のPieceFeatureを保持できる() {
         List<PieceFeature> hisha = List.of(
-                new PieceFeature(Side.SENTE, new Square(2, 8), false),
-                new PieceFeature(Side.GOTE, new Square(8, 2), false)
+                new PieceFeature(Side.SENTE, 10, false),
+                new PieceFeature(Side.GOTE, 70, false)
         );
         List<PieceFeature> kaku = List.of(
-                new PieceFeature(Side.SENTE, new Square(8, 8), false),
-                new PieceFeature(Side.GOTE, new Square(2, 2), false)
+                new PieceFeature(Side.SENTE, 17, false),
+                new PieceFeature(Side.GOTE, 9, false)
         );
         List<PieceFeature> ou = List.of(
-                new PieceFeature(Side.SENTE, new Square(5, 9), false),
-                new PieceFeature(Side.GOTE, new Square(5, 1), false)
+                new PieceFeature(Side.SENTE, 76, false),
+                new PieceFeature(Side.GOTE, 4, false)
         );
         List<PieceFeature> gin = List.of(
-                new PieceFeature(Side.SENTE, new Square(3, 9), false),
-                new PieceFeature(Side.SENTE, new Square(7, 9), false),
-                new PieceFeature(Side.GOTE, new Square(3, 1), false),
-                new PieceFeature(Side.GOTE, new Square(7, 1), false)
+                new PieceFeature(Side.SENTE, 74, false),
+                new PieceFeature(Side.SENTE, 80, false),
+                new PieceFeature(Side.GOTE, 2, false),
+                new PieceFeature(Side.GOTE, 8, false)
         );
 
         PositionFeatures features = new PositionFeatures(hisha, kaku, ou, gin);
@@ -95,7 +95,7 @@ class PositionFeaturesTest {
     private static List<PieceFeature> createFeatures(int count) {
         List<PieceFeature> features = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            features.add(new PieceFeature(Side.SENTE, null, false));
+            features.add(new PieceFeature(Side.SENTE, i, false));
         }
         return features;
     }
