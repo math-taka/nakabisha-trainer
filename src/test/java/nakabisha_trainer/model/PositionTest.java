@@ -206,20 +206,20 @@ class PositionTest {
         assertEquals(
                 List.of(
                         new PieceFeature(
-                                Side.SENTE,
-                                new Square(3, 9).index(),
-                                false),
-                        new PieceFeature(
-                                Side.SENTE,
-                                new Square(7, 9).index(),
-                                false),
-                        new PieceFeature(
                                 Side.GOTE,
                                 new Square(3, 1).index(),
                                 false),
                         new PieceFeature(
                                 Side.GOTE,
                                 new Square(7, 1).index(),
+                                false),
+                        new PieceFeature(
+                                Side.SENTE,
+                                new Square(3, 9).index(),
+                                false),
+                        new PieceFeature(
+                                Side.SENTE,
+                                new Square(7, 9).index(),
                                 false)
                 ),
                 features.gin()
