@@ -4,6 +4,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PieceFeatureTest {
 
@@ -35,5 +36,58 @@ class PieceFeatureTest {
         assertEquals(side, feature.side());
         assertEquals(null, feature.index());
         assertEquals(promoted, feature.promoted());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "0, 4, true",
+            "1, 4, false",
+            "4, 5, true",
+            "13, 5, true",
+            "14, 5, false",
+            "80, 9, true"
+    })
+    void 指定した筋に駒がいるか判定できる(
+            Integer index,
+            int file,
+            boolean expected) {
+
+        PieceFeature feature =
+                new PieceFeature(Side.SENTE, index, false);
+
+        assertEquals(expected, feature.isOnFile(file));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "SENTE, false",
+            "GOTE, false",
+            "SENTE, true",
+            "GOTE, true"
+    })
+    void 持ち駒はどの筋にもいない(Side side, boolean promoted) {
+        PieceFeature feature =
+                new PieceFeature(side, null, promoted);
+
+        assertEquals(false, feature.isOnFile(1));
+        assertEquals(false, feature.isOnFile(5));
+        assertEquals(false, feature.isOnFile(9));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "-1",
+            "0",
+            "10",
+            "11"
+    })
+    void 筋が1から9の範囲外なら例外になる(int file) {
+        PieceFeature feature =
+                new PieceFeature(Side.SENTE, 4, false);
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> feature.isOnFile(file)
+        );
     }
 }
