@@ -40,8 +40,8 @@ class PieceFeatureTest {
 
     @ParameterizedTest
     @CsvSource({
-            "0, 4, true",
-            "1, 4, false",
+            "0, 1, true",
+            "4, 1, false",
             "4, 5, true",
             "13, 5, true",
             "14, 5, false",
