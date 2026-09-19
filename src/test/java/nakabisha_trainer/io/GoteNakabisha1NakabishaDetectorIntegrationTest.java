@@ -1,6 +1,7 @@
 package nakabisha_trainer.io;
 
 import nakabisha_trainer.model.GameRecord;
+import nakabisha_trainer.model.NakabishaDetector;
 import nakabisha_trainer.model.Position;
 import nakabisha_trainer.model.Side;
 import org.junit.jupiter.api.Test;
